@@ -18,6 +18,7 @@ namespace DZFileMeneger
             Thread writeMonitor = new Thread(fileManeger.GetCountWriteRow);
             writeMonitor.Start();
             write.Start();
+            //закрываем потоки
             writeMonitor.Join();
             write.Join();
             Thread.Sleep(1000);
@@ -25,6 +26,7 @@ namespace DZFileMeneger
             Thread readMonitor =new Thread(fileManeger.GetCountReadRow);
             readMonitor.Start();
             read.Start();
+            //закрываем потоки
             readMonitor.Join();
             read.Join();
         }

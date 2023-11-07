@@ -12,15 +12,16 @@ namespace DZFileMeneger
     {
         private int CountReadRow = 0;
         private int CountWriteRow = 0;
-        private bool IsStreamWork=true;
+        private bool IsStreamWork=true;//флаг отключения полсе записи или счиитывания
         //streamreader, streamwriter , file.
+
+        //создаем большой файл и записываем его по указанному пути
         public void BigFileWriter(string path, int countWriteRow, int rowCharCount)
         {
             using (StreamWriter streamWriter = new StreamWriter(path, false))
             {
-                int countRow = countWriteRow / 20;
-                int countTemp = countRow;
                 Console.WriteLine("Write file begin");
+                //заполняем строку символами в строках
                 for (int i = 0; i < countWriteRow; i++)
                 {
                     StringBuilder sb = new StringBuilder();
@@ -29,6 +30,7 @@ namespace DZFileMeneger
                         sb.Append("a");
                     }
                     sb.Append("\n");
+                    //записываем в файл  
                     streamWriter.Write(sb.ToString());
                     CountWriteRow = i;
                 }
@@ -37,29 +39,32 @@ namespace DZFileMeneger
                 Console.WriteLine("Write file complit");
             }
         }
+        //кол-во записанных сток
         public void GetCountWriteRow()
         {
             IsStreamWork = true;
             DateTime time = DateTime.Now;
             while(IsStreamWork)
             {
-                Console.WriteLine($"{DateTime.Now - time}ms {CountWriteRow}");
+                Console.WriteLine($"{DateTime.Now - time}ms {CountWriteRow} bit");
                 Thread.Sleep(200);
             }
-            Console.WriteLine($"{DateTime.Now - time}ms {CountWriteRow}");
+            Console.WriteLine($"{DateTime.Now - time}ms {CountWriteRow} bit");
         }
+        //кол-во считанных строк
         public void GetCountReadRow()
         {
             IsStreamWork = true;
             DateTime time = DateTime.Now;
             while (IsStreamWork)
             {
-                Console.WriteLine($"{DateTime.Now - time}ms {CountReadRow}");
+                Console.WriteLine($"{DateTime.Now - time}ms {CountReadRow} bit");
                 Thread.Sleep(100);
             }
-            Console.WriteLine($"{DateTime.Now - time}ms {CountReadRow}");
+            Console.WriteLine($"{DateTime.Now - time}ms {CountReadRow} bit");
         }
 
+        //чтение файла построчно
         public string BigFileReader(string path)
         {
             using (StreamReader reader = new StreamReader(path))
@@ -73,8 +78,6 @@ namespace DZFileMeneger
                 string readResult = $"Count is readed row: {CountReadRow}";
                 IsStreamWork = false;
                 Console.WriteLine("Read file complit");
-               // Console.WriteLine(readResult);
-
                 return readResult;
             }
 
